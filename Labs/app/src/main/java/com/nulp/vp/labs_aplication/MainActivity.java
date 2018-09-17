@@ -10,44 +10,45 @@ import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
-    private TextView tv_name;
-    private EditText et_name;
-    private Button btn_set_name, btn_clear;
+    private TextView tvName;
+    private EditText etName;
+    private Button btnSetName;
+    private Button btnClear;
     private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         init();
+    }
 
-        btn_set_name.setOnClickListener(
+    private void init() {
+        tvName = findViewById(R.id.tv_name);
+        btnSetName = findViewById(R.id.btn_set_name);
+        btnClear = findViewById(R.id.btn_clear);
+        etName = findViewById(R.id.et_name);
+
+        btnSetName.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        name = et_name.getText().toString();
-                        if (et_name.getText().toString().trim().equals("")) {
+                        name = etName.getText().toString();
+                        Boolean isEmpty = name.trim().equals("");
+                        if (isEmpty) {
                             Toast.makeText(getApplicationContext(), "Enter your name", Toast.LENGTH_LONG).show();
                         } else {
-                            tv_name.setText("Hello " + name);
+                            tvName.setText("Hello " + name);
                         }
                     }
                 });
 
-        btn_clear.setOnClickListener(
+        btnClear.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        et_name.setText("");
+                        etName.setText("");
                     }
                 });
-    }
-
-    private void init() {
-        tv_name = findViewById(R.id.tv_name);
-        btn_set_name = findViewById(R.id.btn_set_name);
-        btn_clear = findViewById(R.id.btn_clear);
-        et_name = findViewById(R.id.et_name);
     }
 }
