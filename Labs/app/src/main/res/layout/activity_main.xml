@@ -4,97 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
     tools:context=".UI.MainActivity">
 
-
-    <EditText
-        android:id="@+id/et_name"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_info"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:hint="@string/input_your_name"
-        android:inputType="textAutoComplete"
-        android:maxLines="1"
-        android:paddingStart="15dp"
-        android:singleLine="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/et_last_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="@string/input_your_surname"
-        android:inputType="textAutoComplete"
-        android:maxLines="1"
-        android:paddingStart="15dp"
-        android:singleLine="true"
-        app:layout_constraintTop_toBottomOf="@+id/et_name" />
-
-    <EditText
-        android:id="@+id/et_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="@string/email"
-        android:inputType="textAutoComplete"
-        android:maxLines="1"
-        android:paddingLeft="15dp"
-        android:singleLine="true"
-        app:layout_constraintTop_toBottomOf="@+id/et_last_name" />
-
-    <EditText
-        android:id="@+id/et_phone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="@string/phone"
-        android:inputType="textAutoComplete"
-        android:maxLines="1"
-        android:paddingLeft="15dp"
-        android:singleLine="true"
-        app:layout_constraintTop_toBottomOf="@+id/et_email" />
-
-    <EditText
-        android:id="@+id/et_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        android:maxLines="1"
-        android:paddingLeft="15dp"
-        android:singleLine="true"
-        app:layout_constraintTop_toBottomOf="@+id/et_phone" />
-
-    <EditText
-        android:id="@+id/et_password_confr"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="@string/password_confirmation"
-        android:inputType="textPassword"
-        android:maxLines="1"
-        android:paddingLeft="15dp"
-        android:singleLine="true"
-        app:layout_constraintTop_toBottomOf="@+id/et_password" />
-
-    <Button
-        android:id="@+id/btn_submit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Submit"
-        app:layout_constraintTop_toBottomOf="@+id/et_password_confr" />
-
-    <Button
-        android:id="@+id/btn_change_act"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Go to activity"
-        app:layout_constraintTop_toBottomOf="@+id/btn_submit"/>
-
-
 </android.support.constraint.ConstraintLayout>
