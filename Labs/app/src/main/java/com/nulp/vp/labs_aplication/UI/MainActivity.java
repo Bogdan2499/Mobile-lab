@@ -1,6 +1,7 @@
 package com.nulp.vp.labs_aplication.UI;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private CustomAdapter adapter;
     private ApiService apiService;
     private RecyclerView mRecyclerView;
+    private SwipeRefreshLayout pullToRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,17 +61,18 @@ public class MainActivity extends AppCompatActivity {
     private void init() {
         apiService = ApiUtils.getSOService();
         mRecyclerView = findViewById(R.id.rv_info);
-        adapter = new CustomAdapter(this, new ArrayList<Film>(0), new CustomAdapter.PostItemListener() {
-
+        pullToRefresh = findViewById(R.id.pullToRefresh);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onPostClick(long id) {
-                Toast.makeText(MainActivity.this, "Film id is:  " + id, Toast.LENGTH_SHORT).show();
+            public void onRefresh() {
+                loadFilms(); // your code
+                pullToRefresh.setRefreshing(false);
             }
         });
+        adapter = new CustomAdapter(this, new ArrayList<Film>(0));
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(adapter);
-        mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
     }
 
