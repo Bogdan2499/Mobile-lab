@@ -7,6 +7,12 @@ import com.google.gson.annotations.SerializedName;
  * Created by Vova0199 on 24.09.2018.
  */
 public class Film {
+    public Film(String title, String overview, String posterPath, String voteAverage) {
+        this.overview = overview;
+        this.posterPath = posterPath;
+        this.title = title;
+        this.voteAverage = voteAverage;
+    }
 
     @SerializedName("adult")
     @Expose
@@ -40,7 +46,7 @@ public class Film {
     private Boolean video;
     @SerializedName("vote_average")
     @Expose
-    private Double voteAverage;
+    private String voteAverage;
     @SerializedName("vote_count")
     @Expose
     private Integer voteCount;
@@ -128,11 +134,11 @@ public class Film {
         this.video = video;
     }
 
-    public Double getVoteAverage() {
-        return voteAverage;
+    public String getVoteAverage() {
+        return String.valueOf(voteAverage);
     }
 
-    public void setVoteAverage(Double voteAverage) {
+    public void setVoteAverage(String voteAverage) {
         this.voteAverage = voteAverage;
     }
 

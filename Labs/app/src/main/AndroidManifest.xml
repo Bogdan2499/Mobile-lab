@@ -19,9 +19,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".UI.ListInfo"
+            android:name=".UI.FilmInfo"
             android:parentActivityName=".UI.MainActivity" />
-        <activity android:name=".UI.FilmInfo"></activity>
+        <activity android:name=".FavouriteFilm"></activity>
     </application>
 
 </manifest>

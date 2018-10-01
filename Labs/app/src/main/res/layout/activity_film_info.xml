@@ -20,7 +20,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="fitCenter"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/ic_launcher"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/my_toolbar" />
 
             <TextView
                 android:id="@+id/tv_title"
@@ -54,6 +57,17 @@
                 android:text="@string/description"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_vote_average" />
+
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Save" />
+            <Button
+                android:id="@+id/btn_del"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="Delete" />
         </LinearLayout>
     </ScrollView>
 
