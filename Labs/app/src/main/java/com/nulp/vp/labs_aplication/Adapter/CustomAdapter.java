@@ -66,8 +66,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View postView = inflater.inflate(R.layout.row_item, parent, false);
-        ViewHolder viewHolder = new ViewHolder(postView);
-        return viewHolder;
+        return new ViewHolder(postView);
     }
 
     @Override

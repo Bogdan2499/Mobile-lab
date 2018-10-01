@@ -11,12 +11,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nulp.vp.labs_aplication.API.ApiService;
 import com.nulp.vp.labs_aplication.API.ApiUtils;
 import com.nulp.vp.labs_aplication.Adapter.CustomAdapter;
-import com.nulp.vp.labs_aplication.FavouriteFilm;
 import com.nulp.vp.labs_aplication.Model.Film;
 import com.nulp.vp.labs_aplication.Model.ListFilms;
 import com.nulp.vp.labs_aplication.R;

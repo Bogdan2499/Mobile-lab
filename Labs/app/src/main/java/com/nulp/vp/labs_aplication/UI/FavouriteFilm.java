@@ -1,4 +1,4 @@
-package com.nulp.vp.labs_aplication;
+package com.nulp.vp.labs_aplication.UI;
 
 import android.database.Cursor;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import com.nulp.vp.labs_aplication.Adapter.CustomAdapter;
 import com.nulp.vp.labs_aplication.DB.DBHelp;
 import com.nulp.vp.labs_aplication.Model.Film;
+import com.nulp.vp.labs_aplication.R;
 
 import java.util.ArrayList;
 
@@ -37,17 +38,14 @@ public class FavouriteFilm extends AppCompatActivity {
             description = c.getString(1);
             imageURL = c.getString(2);
             voteAverage = c.getString(3);
-
             Film film = new Film(title, description, imageURL, voteAverage);
-
             films.add(film);
         }
-
         if (!(films.size() < 1)) {
             mRecyclerView.setAdapter(adapter);
         }
-
     }
+
     private void init(){
         mRecyclerView = findViewById(R.id.rv_info_fav);
         pullToRefresh = findViewById(R.id.pullToRefreshFav);
