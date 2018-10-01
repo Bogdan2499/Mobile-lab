@@ -85,7 +85,6 @@ public class FilmInfo extends AppCompatActivity {
                     public void onClick(View v) {
 
                         boolean insert = dbHelp.insert(title, description, imageURL, voteAverage);
-
                         if (insert) {
                             Toast.makeText(FilmInfo.this, "Фільм додано до улюблених", Toast.LENGTH_SHORT).show();
                         }
