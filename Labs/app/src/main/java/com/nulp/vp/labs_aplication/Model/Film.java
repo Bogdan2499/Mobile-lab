@@ -24,9 +24,6 @@ public class Film {
     @SerializedName("poster_path")
     @Expose
     private String posterPath;
-    @SerializedName("release_date")
-    @Expose
-    private String releaseDate;
     @SerializedName("title")
     @Expose
     private String title;

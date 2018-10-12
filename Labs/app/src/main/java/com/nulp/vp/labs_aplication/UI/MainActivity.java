@@ -21,6 +21,9 @@ import com.nulp.vp.labs_aplication.R;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,18 +32,26 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private CustomAdapter adapter;
-    private TextView tvError;
     private ApiService apiService;
-    private Button bntShowFav;
-    private RecyclerView mRecyclerView;
-    private SwipeRefreshLayout pullToRefresh;
+    @BindView(R.id.tv_error)
+    TextView tvError;
+    @BindView(R.id.tv_toolbar)
+    TextView tvToolbarText;
+    @BindView(R.id.include_main)
+    View myLayout;
+    @BindView(R.id.btn_split)
+    Button btnFavourite;
+    @BindView(R.id.rv_info)
+    RecyclerView mRecyclerView;
+    @BindView(R.id.pullToRefresh)
+    SwipeRefreshLayout pullToRefresh;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
-        loadFilms();
     }
 
     public void loadFilms() {
@@ -63,35 +74,36 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    @OnClick(R.id.btn_split)
+    void submitButton(View view) {
+        Intent intent = new Intent(MainActivity.this, FavouriteFilm.class);
+        startActivity(intent);
+    }
 
     private void init() {
         apiService = ApiUtils.getSOService();
-        tvError = findViewById(R.id.tv_error);
-        bntShowFav = findViewById(R.id.btn_show_fav);
+        ButterKnife.bind( this );
+        tvToolbarText = ButterKnife.findById(myLayout, R.id.tv_toolbar);
+        btnFavourite = ButterKnife.findById(myLayout, R.id.btn_split);
 
-        mRecyclerView = findViewById(R.id.rv_info);
-        pullToRefresh = findViewById(R.id.pullToRefresh);
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                loadFilms(); // your code
+                loadFilms();
                 pullToRefresh.setRefreshing(false);
             }
         });
-        bntShowFav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, FavouriteFilm.class);
-                startActivity(intent);
-            }
-        });
+
+        tvToolbarText.setText(R.string.list_of_films);
+        btnFavourite.setText(R.string.favourite_films);
 
         adapter = new CustomAdapter(this, new ArrayList<Film>(0));
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-    }
 
+        loadFilms();
+    }
 
 }

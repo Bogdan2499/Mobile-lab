@@ -14,18 +14,7 @@ public class DBHelp extends SQLiteOpenHelper {
     public  DBHelp(Context c){
         super(c, "Favourites", null, 1);
     }
-    private static final int DATABASE_VERSION = 1;
 
-    private static final String DATABASE_NAME = "Favourites";
-
-    private static final String GROUPS_TABLE_NAME = "films";
-
-
-    public static final String FILM_ID = "id";
-    public static final String FILM_TITLE = "title";
-    public static final String FILM_DESCRIPTION = "description";
-    public static final String FILM_POSTER = "image_path";
-    public static final String FILM_RATE = "rate_average";
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table films( id INTEGER PRIMARY KEY AUTOINCREMENT, title text, " +
@@ -63,9 +52,8 @@ public class DBHelp extends SQLiteOpenHelper {
     public Cursor queueAll(){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        Cursor cursor = db.rawQuery("select  title,  description,rate_average ,\n" +
-                "                         image_path from films", null);
-        return cursor;
+        return db.rawQuery("select  title,  description,rate_average ,\n" +
+                                        "image_path from films", null);
     }
 
 

@@ -2,11 +2,15 @@ package com.nulp.vp.labs_aplication.UI;
 
 import android.database.Cursor;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.nulp.vp.labs_aplication.Adapter.CustomAdapter;
 import com.nulp.vp.labs_aplication.DB.DBHelp;
@@ -15,12 +19,24 @@ import com.nulp.vp.labs_aplication.R;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class FavouriteFilm extends AppCompatActivity {
     private Cursor c;
-    private RecyclerView mRecyclerView;
     private CustomAdapter adapter;
+
+    @BindView(R.id.tv_toolbar)
+    TextView tvToolbarText;
+    @BindView(R.id.rv_info_fav)
+    RecyclerView mRecyclerView;
+    @BindView(R.id.pullToRefreshFav)
+    SwipeRefreshLayout pullToRefresh;
+    @BindView(R.id.toolbar_favourite)
+    View myLayout;
+    @BindView(R.id.btn_split)
+    Button btnSaveDel;
     private ArrayList<Film> films = new ArrayList<>();
-    private SwipeRefreshLayout pullToRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +44,7 @@ public class FavouriteFilm extends AppCompatActivity {
         setContentView(R.layout.activity_favourite_film);
         init();
     }
+
     private void loadFilms() {
         films.clear();
         String title, description, imageURL, voteAverage;
@@ -46,9 +63,12 @@ public class FavouriteFilm extends AppCompatActivity {
         }
     }
 
-    private void init(){
-        mRecyclerView = findViewById(R.id.rv_info_fav);
-        pullToRefresh = findViewById(R.id.pullToRefreshFav);
+    private void init() {
+        ButterKnife.bind(this);
+        tvToolbarText = ButterKnife.findById(myLayout, R.id.tv_toolbar);
+        btnSaveDel = ButterKnife.findById(myLayout, R.id.btn_split);
+        btnSaveDel.setVisibility(View.GONE);
+        tvToolbarText.setText("Favourite films");
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

@@ -14,13 +14,30 @@ import com.bumptech.glide.Glide;
 import com.nulp.vp.labs_aplication.DB.DBHelp;
 import com.nulp.vp.labs_aplication.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class FilmInfo extends AppCompatActivity {
     private DBHelp dbHelp;
-    private Cursor cursor1;
-    private Button btnSave, btnDel;
+    private Cursor cursor;
+    private int isFavourite = 0;
+
     private String title, description, imageURL, voteAverage;
-    private TextView tvTitle, tvDescription, tvRate;
-    private ImageView image;
+    @BindView(R.id.tv_toolbar)
+    TextView tvToolbarText;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.tv_description)
+    TextView tvDescription;
+    @BindView(R.id.tv_vote_average)
+    TextView tvRate;
+    @BindView(R.id.toolbar_info)
+    View toolbarLayout;
+    @BindView(R.id.btn_split)
+    Button btnSaveDelete;
+    @BindView(R.id.img_poster)
+    ImageView image;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +57,7 @@ public class FilmInfo extends AppCompatActivity {
 
     private void setInfo(String imageUrl, String title, String description, String rateAverage) {
         tvTitle.setText(title);
+        tvToolbarText.setText(title);
         tvDescription.setText(description);
         tvRate.setText(rateAverage);
         Glide.with(this)
@@ -47,53 +65,46 @@ public class FilmInfo extends AppCompatActivity {
                 .into(image);
     }
 
-    private void check_fav() {
-        DBHelp db = new DBHelp(this);
-        cursor1 = db.queueAll();
-        while (cursor1.moveToNext()) {
-            String titleFav = cursor1.getString(0);
-            String descriptionFav = cursor1.getString(1);
-
+    private void checkFilm() {
+        cursor = dbHelp.queueAll();
+        while (cursor.moveToNext()) {
+            String titleFav = cursor.getString(0);
+            String descriptionFav = cursor.getString(1);
             if (titleFav.equals(title) || descriptionFav.equals(description)) {
-                btnSave.setVisibility(View.GONE);
-                btnDel.setVisibility(View.VISIBLE);
+                isFavourite++;
             }
+
         }
+        if (isFavourite == 0) {
+            btnSaveDelete.setText(R.string.save);
+        } else btnSaveDelete.setText(R.string.delete);
+
     }
 
     private void init() {
-        tvTitle = findViewById(R.id.tv_title);
-        tvDescription = findViewById(R.id.tv_description);
-        tvRate = findViewById(R.id.tv_vote_average);
-        image = findViewById(R.id.img_poster);
-        btnSave = findViewById(R.id.btn_save);
-        btnDel = findViewById(R.id.btn_del);
+        ButterKnife.bind( this );
+        tvToolbarText = ButterKnife.findById(toolbarLayout, R.id.tv_toolbar);
+        btnSaveDelete = ButterKnife.findById(toolbarLayout, R.id.btn_split);
         dbHelp = new DBHelp(this);
-
         getIncomingIntent();
-        check_fav();
-        btnDel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dbHelp.delete(title);
-            }
-        });
-
-        btnSave.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        boolean insert = dbHelp.insert(title, description, imageURL, voteAverage);
-                        if (insert) {
-                            Toast.makeText(FilmInfo.this, "Фільм додано до улюблених", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-
-                });
+        checkFilm();
     }
 
+    @OnClick(R.id.btn_split)
+    void saveDelete(View view) {
+        if (isFavourite == 0) {
+            boolean insert = dbHelp.insert(title, description, imageURL, voteAverage);
+            if (insert) {
+                Toast.makeText(FilmInfo.this, "Фільм додано до улюблених", Toast.LENGTH_SHORT).show();
+                checkFilm();
+            }
+        } else {
+            dbHelp.delete(title);
+            isFavourite = 0;
+            checkFilm();
+            Toast.makeText(FilmInfo.this, "Фільм видалено з улюблених", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
 
 

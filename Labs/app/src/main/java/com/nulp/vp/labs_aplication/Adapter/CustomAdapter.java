@@ -2,7 +2,6 @@ package com.nulp.vp.labs_aplication.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +16,9 @@ import com.nulp.vp.labs_aplication.UI.FilmInfo;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static java.lang.String.valueOf;
 
 /**
@@ -28,27 +30,29 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     private Context mContext;
 
     class ViewHolder extends RecyclerView.ViewHolder{
-
-        TextView tvName, tvEmail, tvPhone;
+        @BindView(R.id.tv_name)
+        TextView tvTitle;
+        @BindView(R.id.tv_email)
+        TextView tvVoteAverage;
+        @BindView(R.id.tv_phone)
+        TextView tvDescription;
+        @BindView(R.id.img_poster_list)
         ImageView imgPoster;
 
         ViewHolder(View itemView) {
             super(itemView);
-            tvName = itemView.findViewById(R.id.tv_name);
-            tvEmail = itemView.findViewById(R.id.tv_email);
-            tvPhone = itemView.findViewById(R.id.tv_phone);
-            imgPoster = itemView.findViewById(R.id.img_poster_list);
+            ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int pos = getAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION){
-                        Film clickFilm = films.get(pos);
+                        Film currentFilm = films.get(pos);
                         Intent intent = new Intent(mContext, FilmInfo.class);
-                        intent.putExtra("title", clickFilm.getTitle());
-                        intent.putExtra("description", clickFilm.getOverview());
-                        intent.putExtra("image_path", clickFilm.getPosterPath());
-                        intent.putExtra("rate_average", clickFilm.getVoteAverage().toString());
+                        intent.putExtra("title", currentFilm.getTitle());
+                        intent.putExtra("description", currentFilm.getOverview());
+                        intent.putExtra("image_path", currentFilm.getPosterPath());
+                        intent.putExtra("rate_average", currentFilm.getVoteAverage());
                         mContext.startActivity(intent);
                     }
                 }
@@ -75,9 +79,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         Glide.with(mContext)
                 .load("https://image.tmdb.org/t/p/original" + item.getPosterPath())
                 .into(holder.imgPoster);
-        holder.tvName.setText(item.getTitle());
-        holder.tvPhone.setText(item.getOverview());
-        holder.tvEmail.setText(valueOf(item.getVoteAverage()));
+        holder.tvTitle.setText(item.getTitle());
+        holder.tvDescription.setText(item.getOverview());
+        holder.tvVoteAverage.setText(valueOf(item.getVoteAverage()));
     }
 
     @Override
