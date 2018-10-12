@@ -19,10 +19,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class FilmInfo extends AppCompatActivity {
+
     private DBHelp dbHelp;
     private Cursor cursor;
-    private int isFavourite = 0;
-
+    private int isFavourite;
     private String title, description, imageURL, voteAverage;
     @BindView(R.id.tv_toolbar)
     TextView tvToolbarText;
@@ -73,7 +73,6 @@ public class FilmInfo extends AppCompatActivity {
             if (titleFav.equals(title) || descriptionFav.equals(description)) {
                 isFavourite++;
             }
-
         }
         if (isFavourite == 0) {
             btnSaveDelete.setText(R.string.save);
@@ -106,5 +105,3 @@ public class FilmInfo extends AppCompatActivity {
         }
     }
 }
-
-

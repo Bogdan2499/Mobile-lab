@@ -55,19 +55,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loadFilms() {
-        apiService.getAnswers().enqueue(new Callback<ListFilms>() {
+        apiService.getFilms().enqueue(new Callback<ListFilms>() {
             @Override
             public void onResponse(Call<ListFilms> call, Response<ListFilms> response) {
-
                 if (response.isSuccessful()) {
                     adapter.updateAnswers(response.body().getFilms());
                     Log.d("MainActivity", "films loaded from API");
                 } else {
                     tvError.setText("Помилка");
-
                 }
             }
-
             @Override
             public void onFailure(Call<ListFilms> call, Throwable t) {
                 Log.d("MainActivity", "error loading from API");
@@ -86,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         tvToolbarText = ButterKnife.findById(myLayout, R.id.tv_toolbar);
         btnFavourite = ButterKnife.findById(myLayout, R.id.btn_split);
-
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -94,17 +90,18 @@ public class MainActivity extends AppCompatActivity {
                 pullToRefresh.setRefreshing(false);
             }
         });
-
         tvToolbarText.setText(R.string.list_of_films);
         btnFavourite.setText(R.string.favourite_films);
+        initAdapter();
+        loadFilms();
+    }
 
+    private void initAdapter() {
         adapter = new CustomAdapter(this, new ArrayList<Film>(0));
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-
-        loadFilms();
     }
 
 }

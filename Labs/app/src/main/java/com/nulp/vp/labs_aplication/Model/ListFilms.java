@@ -1,6 +1,5 @@
 package com.nulp.vp.labs_aplication.Model;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -10,12 +9,9 @@ import java.util.List;
  */
 public class ListFilms {
     @SerializedName("results")
-    @Expose
     private List<Film> results = null;
 
     public List<Film> getFilms() {
         return results;
     }
-
-
 }

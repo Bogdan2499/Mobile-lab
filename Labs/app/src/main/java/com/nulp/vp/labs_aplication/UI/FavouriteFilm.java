@@ -23,9 +23,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class FavouriteFilm extends AppCompatActivity {
+
     private Cursor c;
     private CustomAdapter adapter;
-
+    private ArrayList<Film> films = new ArrayList<>();
     @BindView(R.id.tv_toolbar)
     TextView tvToolbarText;
     @BindView(R.id.rv_info_fav)
@@ -36,7 +37,6 @@ public class FavouriteFilm extends AppCompatActivity {
     View myLayout;
     @BindView(R.id.btn_split)
     Button btnSaveDel;
-    private ArrayList<Film> films = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +82,5 @@ public class FavouriteFilm extends AppCompatActivity {
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(adapter);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-
     }
 }

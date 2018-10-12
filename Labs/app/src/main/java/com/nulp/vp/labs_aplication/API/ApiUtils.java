@@ -8,8 +8,5 @@ public class ApiUtils {
 
     public static ApiService getSOService() {
         return RetrofitClient.getClient(BASE_URL).create(ApiService.class);
-
     }
-
 }
-

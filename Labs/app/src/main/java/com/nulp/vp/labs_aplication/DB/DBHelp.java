@@ -23,12 +23,8 @@ public class DBHelp extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("drop table if exists about");
         db.execSQL("drop table if exists markers");
     }
-
-
-// ---------------------ABOUT-------------------------------------------
 
     public boolean insert(String title,  String description, String rate_average, String image_path) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -51,10 +47,7 @@ public class DBHelp extends SQLiteOpenHelper {
 
     public Cursor queueAll(){
         SQLiteDatabase db = this.getWritableDatabase();
-
         return db.rawQuery("select  title,  description,rate_average ,\n" +
                                         "image_path from films", null);
     }
-
-
 }

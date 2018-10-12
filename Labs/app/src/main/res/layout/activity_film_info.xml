@@ -17,7 +17,6 @@
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_info">
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="@string/rate"
-                android:textColor="#0022ff"
+                android:textColor="@color/blue"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title" />

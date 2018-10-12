@@ -11,6 +11,5 @@ import retrofit2.http.GET;
 public interface ApiService {
 
     @GET("trending/movie/week?api_key=7ae5035398e0c1d3b0b4219a64866f37")
-    Call<ListFilms> getAnswers();
-
+    Call<ListFilms> getFilms();
 }

@@ -38,7 +38,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         TextView tvDescription;
         @BindView(R.id.img_poster_list)
         ImageView imgPoster;
-
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
