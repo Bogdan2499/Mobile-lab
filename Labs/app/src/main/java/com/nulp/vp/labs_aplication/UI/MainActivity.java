@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     @OnClick(R.id.btn_split)
     void submitButton(View view) {
         Intent intent = new Intent(MainActivity.this, FavouriteFilm.class);
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
         apiService = ApiUtils.getSOService();
-        ButterKnife.bind( this );
+        ButterKnife.bind(this);
         tvToolbarText = ButterKnife.findById(myLayout, R.id.tv_toolbar);
         btnFavourite = ButterKnife.findById(myLayout, R.id.btn_split);
 

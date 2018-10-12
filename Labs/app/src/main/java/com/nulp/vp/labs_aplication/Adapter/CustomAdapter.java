@@ -29,7 +29,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     private List<Film> films;
     private Context mContext;
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_name)
         TextView tvTitle;
         @BindView(R.id.tv_email)
@@ -46,7 +46,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                 @Override
                 public void onClick(View view) {
                     int pos = getAdapterPosition();
-                    if (pos != RecyclerView.NO_POSITION){
+                    if (pos != RecyclerView.NO_POSITION) {
                         Film currentFilm = films.get(pos);
                         Intent intent = new Intent(mContext, FilmInfo.class);
                         intent.putExtra("title", currentFilm.getTitle());
