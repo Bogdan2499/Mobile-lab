@@ -1,10 +1,12 @@
-package com.nulp.vp.labs_aplication.UI;
+package com.nulp.vp.labs_aplication;
 
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,14 +14,15 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.nulp.vp.labs_aplication.DB.DBHelp;
-import com.nulp.vp.labs_aplication.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class FilmInfo extends AppCompatActivity {
-
+/**
+ * Created by Vova0199 on 03.11.2018.
+ */
+public class FilmDetailsFragment extends Fragment{
     private DBHelp dbHelp;
     private Cursor cursor;
     private int isFavourite;
@@ -39,18 +42,19 @@ public class FilmInfo extends AppCompatActivity {
     @BindView(R.id.img_poster)
     ImageView image;
 
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_film_info);
-        init();
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_film_info, null);
+        init(view);
+        return view;
     }
 
     private void getIncomingIntent() {
-        title = getIntent().getStringExtra("title");
-        description = getIntent().getStringExtra("description");
-        imageURL = getIntent().getStringExtra("image_path");
-        voteAverage = getIntent().getStringExtra("rate_average");
+        title = getArguments().getString("title");
+        description = getArguments().getString("description");
+        imageURL = getArguments().getString("image_path");
+        voteAverage = getArguments().getString("voteAverage");
         setInfo(imageURL, title, description, voteAverage);
     }
 
@@ -80,28 +84,27 @@ public class FilmInfo extends AppCompatActivity {
 
     }
 
-    private void init() {
-        ButterKnife.bind( this );
+    private void init(View view) {
+        ButterKnife.bind(this, view);
         tvToolbarText = ButterKnife.findById(toolbarLayout, R.id.tv_toolbar);
         btnSaveDelete = ButterKnife.findById(toolbarLayout, R.id.btn_split);
-        dbHelp = new DBHelp(this);
+        dbHelp = new DBHelp(getActivity());
         getIncomingIntent();
         checkFilm();
     }
-
     @OnClick(R.id.btn_split)
     void saveDelete(View view) {
         if (isFavourite == 0) {
             boolean insert = dbHelp.insert(title, description, imageURL, voteAverage);
             if (insert) {
-                Toast.makeText(FilmInfo.this, "Фільм додано до улюблених", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Фільм додано до улюблених", Toast.LENGTH_SHORT).show();
                 checkFilm();
             }
         } else {
             dbHelp.delete(title);
             isFavourite = 0;
             checkFilm();
-            Toast.makeText(FilmInfo.this, "Фільм видалено з улюблених", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Фільм видалено з улюблених", Toast.LENGTH_SHORT).show();
         }
     }
 }
