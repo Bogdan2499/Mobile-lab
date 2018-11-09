@@ -49,12 +49,7 @@ public class HomeFragment extends Fragment implements CustomAdapter.OnItemCLickL
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, null);
         init(view);
-        if (savedInstanceState == null || !savedInstanceState.containsKey("key")) {
-            loadFilms();
-        } else {
-            list = savedInstanceState.getParcelableArrayList("key");
-            adapter.updateAnswers(list);
-        }
+        loadFilms();
         return view;
     }
 
@@ -89,21 +84,6 @@ public class HomeFragment extends Fragment implements CustomAdapter.OnItemCLickL
             }
         });
         initAdapter();
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if (savedInstanceState != null) {
-            list = savedInstanceState.getParcelableArrayList("key");
-            adapter.updateAnswers(list);
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList("key", list);
     }
 
     private void initAdapter() {

@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class ListFilms {
     @SerializedName("results")
-    private List<Film> results = null;
+    private List<Film> results;
 
     public List<Film> getFilms() {
         return results;

@@ -35,13 +35,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_name)
-        TextView tvTitle;
+        public TextView tvTitle;
         @BindView(R.id.tv_email)
-        TextView tvVoteAverage;
+        public TextView tvVoteAverage;
         @BindView(R.id.tv_phone)
-        TextView tvDescription;
+        public TextView tvDescription;
         @BindView(R.id.img_poster_list)
-        ImageView imgPoster;
+        public ImageView imgPoster;
 
         ViewHolder(View itemView) {
             super(itemView);

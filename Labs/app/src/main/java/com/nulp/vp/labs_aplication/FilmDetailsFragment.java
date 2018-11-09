@@ -26,21 +26,24 @@ public class FilmDetailsFragment extends Fragment{
     private DBHelp dbHelp;
     private Cursor cursor;
     private int isFavourite;
-    private String title, description, imageURL, voteAverage;
+    private String title;
+    private String description;
+    private String imageURL;
+    private String voteAverage;
     @BindView(R.id.tv_toolbar)
-    TextView tvToolbarText;
+    public TextView tvToolbarText;
     @BindView(R.id.tv_title)
-    TextView tvTitle;
+    public TextView tvTitle;
     @BindView(R.id.tv_description)
-    TextView tvDescription;
+    public TextView tvDescription;
     @BindView(R.id.tv_vote_average)
-    TextView tvRate;
+    public TextView tvRate;
     @BindView(R.id.toolbar_info)
-    View toolbarLayout;
+    public View toolbarLayout;
     @BindView(R.id.btn_split)
-    Button btnSaveDelete;
+    public Button btnSaveDelete;
     @BindView(R.id.img_poster)
-    ImageView image;
+    public ImageView image;
 
     @Nullable
     @Override
