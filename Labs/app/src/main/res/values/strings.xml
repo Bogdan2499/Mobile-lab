@@ -1,12 +1,11 @@
 <resources>
     <string name="app_name">Labs-aplication</string>
-    <string name="input_name">Enter your name</string>
-    <string name="say_hello">Say hello</string>
-    <string name="input_your_name">Input your name</string>
-    <string name="input_your_surname">Input your surname</string>
-    <string name="email">Email</string>
-    <string name="phone">Phone</string>
-    <string name="password">Password</string>
-    <string name="password_confirmation">Password confirmation</string>
-    <string name="show_users">Show users</string>
+    <string name="description">Description</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="list_of_films">List of films</string>
+    <string name="favourite_films">Favourite films</string>
+    <string name="title">Title</string>
+    <string name="rate">Rate</string>
+    <string name="title_home">Home</string>
 </resources>
