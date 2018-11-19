@@ -9,7 +9,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.polbins.themoviedb"
+        applicationId "com.nulp.labs_aplication"
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
