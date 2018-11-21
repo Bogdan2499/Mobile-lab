@@ -1,4 +1,4 @@
-package com.nulp.labs_aplication.app.main.view;
+package com.nulp.labs_aplication.app.main;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -14,10 +14,8 @@ import com.nulp.labs_aplication.api.model.Images;
 import com.nulp.labs_aplication.api.model.Movie;
 import com.nulp.labs_aplication.app.App;
 import com.nulp.labs_aplication.app.detail.DetailActivity;
-import com.nulp.labs_aplication.app.main.DaggerMainComponent;
-import com.nulp.labs_aplication.app.main.MainContract;
-import com.nulp.labs_aplication.app.main.MainModule;
-import com.nulp.labs_aplication.app.main.MainPresenter;
+import com.nulp.labs_aplication.app.main.view.EndlessScrollListener;
+import com.nulp.labs_aplication.app.main.view.MoviesAdapter;
 
 import java.util.List;
 
@@ -32,8 +30,9 @@ import static com.nulp.labs_aplication.app.detail.DetailActivity.MOVIE_TITLE;
 
 public class MainActivity extends AppCompatActivity implements
         MainContract.View,
-        SwipeRefreshLayout.OnRefreshListener, EndlessScrollListener.ScrollToBottomListener, MoviesAdapter.ItemClickListener {
-    private static final String TAG = "Main";
+        SwipeRefreshLayout.OnRefreshListener,
+        EndlessScrollListener.ScrollToBottomListener,
+        MoviesAdapter.ItemClickListener {
 
     @Inject
     MainPresenter presenter;
@@ -47,9 +46,9 @@ public class MainActivity extends AppCompatActivity implements
     @BindView(R.id.progressBar)
     View loadingView;
 
-    private MoviesAdapter moviesAdapter;
-    private EndlessScrollListener endlessScrollListener;
-    private Images images;
+    private MoviesAdapter mMoviesAdapter;
+    private EndlessScrollListener mEndlessScrollListener;
+    private Images mImages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,14 +67,14 @@ public class MainActivity extends AppCompatActivity implements
     private void setupContentView() {
         swipeRefreshLayout.setOnRefreshListener(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        endlessScrollListener = new EndlessScrollListener(linearLayoutManager, this);
+        mEndlessScrollListener = new EndlessScrollListener(linearLayoutManager, this);
         contentView.setLayoutManager(linearLayoutManager);
-        contentView.addOnScrollListener(endlessScrollListener);
+        contentView.addOnScrollListener(mEndlessScrollListener);
     }
 
     @Override
     public void onRefresh() {
-        endlessScrollListener.onRefresh();
+        mEndlessScrollListener.onRefresh();
         presenter.onPullToRefresh();
     }
 
@@ -105,15 +104,15 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void showContent(List<Movie> movies, boolean isRefresh) {
-        if (moviesAdapter == null) {
-            moviesAdapter = new MoviesAdapter(movies, this, images, this);
-            contentView.setAdapter(moviesAdapter);
+        if (mMoviesAdapter == null) {
+            mMoviesAdapter = new MoviesAdapter(movies, this, mImages, this);
+            contentView.setAdapter(mMoviesAdapter);
         } else {
             if (isRefresh) {
-                moviesAdapter.clear();
+                mMoviesAdapter.clear();
             }
-            moviesAdapter.addAll(movies);
-            moviesAdapter.notifyDataSetChanged();
+            mMoviesAdapter.addAll(movies);
+            mMoviesAdapter.notifyDataSetChanged();
         }
 
         // Delay SwipeRefreshLayout animation by 1.5 seconds
@@ -140,10 +139,10 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onConfigurationSet(Images images) {
-        this.images = images;
+        this.mImages = images;
 
-        if (moviesAdapter != null) {
-            moviesAdapter.setImages(images);
+        if (mMoviesAdapter != null) {
+            mMoviesAdapter.setmImages(images);
         }
     }
 

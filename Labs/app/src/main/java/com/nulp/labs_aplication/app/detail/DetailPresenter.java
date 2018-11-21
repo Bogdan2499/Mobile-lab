@@ -16,37 +16,37 @@ import retrofit2.Response;
  */
 
 public class DetailPresenter implements DetailContract.Presenter {
-    private DetailContract.View view;
-    private ApiService apiService;
+    private DetailContract.View mView;
+    private ApiService mApiService;
 
-    private Images images;
+    private Images mImages;
 
     @Inject
     DetailPresenter(DetailContract.View view, ApiService apiService) {
-        this.view = view;
-        this.apiService = apiService;
+        this.mView = view;
+        this.mApiService = apiService;
     }
 
     @Override
     public void start(int movieId) {
-        view.showLoading();
+        mView.showLoading();
 
-        if (images == null) {
+        if (mImages == null) {
             getConfiguration(movieId);
         } else {
-            view.onConfigurationSet(images);
+            mView.onConfigurationSet(mImages);
             getMovie(movieId);
         }
     }
 
     private void getConfiguration(final int movieId) {
-        Call<Configuration> call = apiService.getConfiguration();
+        Call<Configuration> call = mApiService.getConfiguration();
         call.enqueue(new Callback<Configuration>() {
             @Override
             public void onResponse(Call<Configuration> call, Response<Configuration> response) {
                 if (response.isSuccessful()) {
-                    images = response.body().images;
-                    view.onConfigurationSet(images);
+                    mImages = response.body().images;
+                    mView.onConfigurationSet(mImages);
                     getMovie(movieId);
                 }
             }
@@ -58,20 +58,20 @@ public class DetailPresenter implements DetailContract.Presenter {
     }
 
     private void getMovie(int movieId) {
-        Call<Movie> call = apiService.getMovie(movieId);
+        Call<Movie> call = mApiService.getMovie(movieId);
         call.enqueue(new Callback<Movie>() {
             @Override
             public void onResponse(Call<Movie> call, Response<Movie> response) {
                 if (response.isSuccessful()) {
-                    view.showContent(response.body());
+                    mView.showContent(response.body());
                 } else {
-                    view.showError();
+                    mView.showError();
                 }
             }
 
             @Override
             public void onFailure(Call<Movie> call, Throwable t) {
-                view.showError();
+                mView.showError();
             }
         });
     }

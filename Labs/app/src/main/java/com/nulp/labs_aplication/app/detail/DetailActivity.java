@@ -59,8 +59,8 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
     @BindView(R.id.progressBar)
     View loadingView;
 
-    private int movieId = -1;
-    private Images images;
+    private int mMovieId = -1;
+    private Images mImages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +76,7 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            movieId = extras.getInt(MOVIE_ID);
+            mMovieId = extras.getInt(MOVIE_ID);
             String movieTitle = extras.getString(MOVIE_TITLE);
 
             setTitle(movieTitle);
@@ -86,7 +86,7 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
     @Override
     protected void onResume() {
         super.onResume();
-        detailPresenter.start(movieId);
+        detailPresenter.start(mMovieId);
     }
 
     @Override
@@ -137,14 +137,14 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
             imagePath = movie.backdropPath;
         }
 
-        if (images != null && images.baseUrl != null && !images.baseUrl.isEmpty()) {
-            if (images.posterSizes != null) {
-                if (images.posterSizes.size() > 4) {
+        if (mImages != null && mImages.baseUrl != null && !mImages.baseUrl.isEmpty()) {
+            if (mImages.posterSizes != null) {
+                if (mImages.posterSizes.size() > 4) {
                     // usually equal to 'w500'
-                    return images.baseUrl + images.posterSizes.get(4) + imagePath;
+                    return mImages.baseUrl + mImages.posterSizes.get(4) + imagePath;
                 } else {
                     // back-off to hard-coded value
-                    return images.baseUrl + "w500" + imagePath;
+                    return mImages.baseUrl + "w500" + imagePath;
                 }
             }
         }
@@ -194,7 +194,7 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
 
     @Override
     public void onConfigurationSet(Images images) {
-        this.images = images;
+        this.mImages = images;
     }
 
     private void showContent(boolean show) {
@@ -208,7 +208,7 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
 
     @OnClick(R.id.bookButton)
     void onBookButtonClick() {
-        String url = getString(R.string.web_url) + movieId;
+        String url = getString(R.string.web_url) + mMovieId;
 
         if (Build.VERSION.SDK_INT >= 16) {
             CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();

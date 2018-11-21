@@ -21,32 +21,31 @@ import retrofit2.Response;
  */
 
 public class MainPresenter implements MainContract.Presenter {
-    private MainContract.View view;
-    private ApiService apiService;
+    private MainContract.View mView;
+    private ApiService mApiService;
 
-    private int page = 1;
-    private Configuration configuration;
+    private int mPage = 1;
 
     @Inject
-    MainPresenter(MainContract.View view, ApiService apiService) {
-        this.view = view;
-        this.apiService = apiService;
+    MainPresenter(MainContract.View mView, ApiService apiService) {
+        this.mView = mView;
+        this.mApiService = apiService;
     }
 
     @Override
     public void start() {
-        view.showLoading(false);
+        mView.showLoading(false);
         getMovies(true);
         getConfiguration();
     }
 
     private void getConfiguration() {
-        Call<Configuration> call = apiService.getConfiguration();
+        Call<Configuration> call = mApiService.getConfiguration();
         call.enqueue(new Callback<Configuration>() {
             @Override
             public void onResponse(Call<Configuration> call, Response<Configuration> response) {
                 if (response.isSuccessful()) {
-                    view.onConfigurationSet(response.body().images);
+                    mView.onConfigurationSet(response.body().images);
                 }
             }
 
@@ -58,34 +57,34 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void onPullToRefresh() {
-        page = 1; // reset
-        view.showLoading(true);
+        mPage = 1; // reset
+        mView.showLoading(true);
         getMovies(true);
     }
 
     @Override
     public void onScrollToBottom() {
-        page++;
-        view.showLoading(true);
+        mPage++;
+        mView.showLoading(true);
         getMovies(false);
     }
 
     private void getMovies(final boolean isRefresh) {
-        Call<Movies> call = apiService.getMovies(getReleaseDate(),
-                ApiService.SortBy.RELEASE_DATE_DESCENDING, page);
+        Call<Movies> call = mApiService.getMovies(getReleaseDate(),
+                ApiService.SortBy.RELEASE_DATE_DESCENDING, mPage);
         call.enqueue(new Callback<Movies>() {
             @Override
             public void onResponse(Call<Movies> call, Response<Movies> response) {
                 if (response.isSuccessful()) {
-                    view.showContent(response.body().movies, isRefresh);
+                    mView.showContent(response.body().movies, isRefresh);
                 } else {
-                    view.showError();
+                    mView.showError();
                 }
             }
 
             @Override
             public void onFailure(Call<Movies> call, Throwable t) {
-                view.showError();
+                mView.showError();
             }
         });
     }

@@ -1,4 +1,4 @@
-package com.nulp.labs_aplication.app.main;
+package com.nulp.labs_aplication.app.main.view;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -47,7 +47,7 @@ public class EndlessScrollListener extends RecyclerView.OnScrollListener {
         }
     }
 
-    interface ScrollToBottomListener {
+    public interface ScrollToBottomListener {
 
         void onScrollToBottom();
 

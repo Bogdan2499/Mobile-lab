@@ -1,4 +1,4 @@
-package com.nulp.labs_aplication.app.main;
+package com.nulp.labs_aplication.app.main.view;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -27,16 +27,16 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
  */
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
-    private List<Movie> movies;
-    private Activity activity;
-    private Images images;
-    private ItemClickListener itemClickListener;
+    private List<Movie> mMovies;
+    private Activity mActivity;
+    private Images mImages;
+    private ItemClickListener mItemClickListener;
 
     public MoviesAdapter(List<Movie> movies, Activity activity, Images images, ItemClickListener itemClickListener) {
-        this.movies = movies;
-        this.activity = activity;
-        this.images = images;
-        this.itemClickListener = itemClickListener;
+        this.mMovies = movies;
+        this.mActivity = activity;
+        this.mImages = images;
+        this.mItemClickListener = itemClickListener;
     }
 
     @Override
@@ -48,11 +48,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final Movie movie = movies.get(position);
+        final Movie movie = mMovies.get(position);
 
         String fullImageUrl = getFullImageUrl(movie);
         if (!fullImageUrl.isEmpty()) {
-            Glide.with(activity)
+            Glide.with(mActivity)
                     .load(fullImageUrl)
                     .apply(RequestOptions.centerCropTransform())
                     .transition(withCrossFade())
@@ -65,7 +65,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                itemClickListener.onItemClick(movie.id, movie.title);
+                mItemClickListener.onItemClick(movie.id, movie.title);
             }
         });
     }
@@ -80,14 +80,14 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
             imagePath = movie.backdropPath;
         }
 
-        if (images != null && images.baseUrl != null && !images.baseUrl.isEmpty()) {
-            if (images.posterSizes != null) {
-                if (images.posterSizes.size() > 4) {
+        if (mImages != null && mImages.baseUrl != null && !mImages.baseUrl.isEmpty()) {
+            if (mImages.posterSizes != null) {
+                if (mImages.posterSizes.size() > 4) {
                     // usually equal to 'w500'
-                    return images.baseUrl + images.posterSizes.get(4) + imagePath;
+                    return mImages.baseUrl + mImages.posterSizes.get(4) + imagePath;
                 } else {
                     // back-off to hard-coded value
-                    return images.baseUrl + "w500" + imagePath;
+                    return mImages.baseUrl + "w500" + imagePath;
                 }
             }
         }
@@ -97,19 +97,19 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return movies.size();
+        return mMovies.size();
     }
 
     public void clear() {
-        movies.clear();
+        mMovies.clear();
     }
 
     public void addAll(List<Movie> movies) {
-        this.movies.addAll(movies);
+        this.mMovies.addAll(movies);
     }
 
-    public void setImages(Images images) {
-        this.images = images;
+    public void setmImages(Images mImages) {
+        this.mImages = mImages;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

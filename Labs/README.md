@@ -2,7 +2,7 @@
 Android App using The Movie DB API
 
 # Description
-Shows a list of the latest Movies sorted by popularity, which could be drilled down to view the Detail.
+Shows a list of the latest Movies sorted by popularity, which could be drilled down to mView the Detail.
 
 Utilizes a simple MVP pattern, similar to [https://github.com/googlesamples/android-architecture/tree/todo-mvp-dagger](https://github.com/googlesamples/android-architecture/tree/todo-mvp-dagger) but without the use of Fragments. Implemented Unit Tests for the Presenter.
 
