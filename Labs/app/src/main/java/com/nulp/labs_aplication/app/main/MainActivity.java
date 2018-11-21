@@ -1,4 +1,4 @@
-package com.nulp.labs_aplication.app.main;
+package com.nulp.labs_aplication.app.main.view;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -14,6 +14,10 @@ import com.nulp.labs_aplication.api.model.Images;
 import com.nulp.labs_aplication.api.model.Movie;
 import com.nulp.labs_aplication.app.App;
 import com.nulp.labs_aplication.app.detail.DetailActivity;
+import com.nulp.labs_aplication.app.main.DaggerMainComponent;
+import com.nulp.labs_aplication.app.main.MainContract;
+import com.nulp.labs_aplication.app.main.MainModule;
+import com.nulp.labs_aplication.app.main.MainPresenter;
 
 import java.util.List;
 
