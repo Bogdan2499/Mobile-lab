@@ -8,42 +8,41 @@ import android.support.v7.widget.RecyclerView;
  */
 
 public class EndlessScrollListener extends RecyclerView.OnScrollListener {
-    private LinearLayoutManager linearLayoutManager;
-    private ScrollToBottomListener listener;
+    private LinearLayoutManager mLinearLayoutManager;
+    private ScrollToBottomListener mListener;
 
-    private int previousTotal = 0;
-    private boolean loading = true;
-    private int visibleThreshold = 3;
-    private int firstVisibleItem, visibleItemCount, totalItemCount;
+    private int mPreviousTotal = 0;
+    private boolean mLoading = true;
 
     public EndlessScrollListener(LinearLayoutManager linearLayoutManager,
                                  ScrollToBottomListener listener) {
-        this.linearLayoutManager = linearLayoutManager;
-        this.listener = listener;
+        this.mLinearLayoutManager = linearLayoutManager;
+        this.mListener = listener;
     }
 
     public void onRefresh () {
-        previousTotal = 0;
+        mPreviousTotal = 0;
     }
 
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
 
-        visibleItemCount = recyclerView.getChildCount();
-        totalItemCount = linearLayoutManager.getItemCount();
-        firstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
+        int visibleItemCount = recyclerView.getChildCount();
+        int totalItemCount = mLinearLayoutManager.getItemCount();
+        int firstVisibleItem = mLinearLayoutManager.findFirstVisibleItemPosition();
 
-        if (loading) {
-            if (totalItemCount > previousTotal) {
-                loading = false;
-                previousTotal = totalItemCount;
+        if (mLoading) {
+            if (totalItemCount > mPreviousTotal) {
+                mLoading = false;
+                mPreviousTotal = totalItemCount;
             }
         }
-        if (!loading && (totalItemCount - visibleItemCount)
+        int visibleThreshold = 3;
+        if (!mLoading && (totalItemCount - visibleItemCount)
                 <= (firstVisibleItem + visibleThreshold)) {
-            this.listener.onScrollToBottom();
-            loading = true;
+            this.mListener.onScrollToBottom();
+            mLoading = true;
         }
     }
 

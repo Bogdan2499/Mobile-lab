@@ -1,6 +1,7 @@
 package com.nulp.labs_aplication.app.main;
 
 import android.annotation.SuppressLint;
+import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 
 import com.nulp.labs_aplication.api.ApiService;
@@ -43,14 +44,15 @@ public class MainPresenter implements MainContract.Presenter {
         Call<Configuration> call = mApiService.getConfiguration();
         call.enqueue(new Callback<Configuration>() {
             @Override
-            public void onResponse(Call<Configuration> call, Response<Configuration> response) {
+            public void onResponse(@NonNull Call<Configuration> call, @NonNull Response<Configuration> response) {
                 if (response.isSuccessful()) {
+                    assert response.body() != null;
                     mView.onConfigurationSet(response.body().images);
                 }
             }
 
             @Override
-            public void onFailure(Call<Configuration> call, Throwable t) {
+            public void onFailure(@NonNull Call<Configuration> call, @NonNull Throwable t) {
             }
         });
     }
@@ -74,8 +76,9 @@ public class MainPresenter implements MainContract.Presenter {
                 ApiService.SortBy.RELEASE_DATE_DESCENDING, mPage);
         call.enqueue(new Callback<Movies>() {
             @Override
-            public void onResponse(Call<Movies> call, Response<Movies> response) {
+            public void onResponse(@NonNull Call<Movies> call, @NonNull Response<Movies> response) {
                 if (response.isSuccessful()) {
+                    assert response.body() != null;
                     mView.showContent(response.body().movies, isRefresh);
                 } else {
                     mView.showError();
@@ -83,24 +86,17 @@ public class MainPresenter implements MainContract.Presenter {
             }
 
             @Override
-            public void onFailure(Call<Movies> call, Throwable t) {
+            public void onFailure(@NonNull Call<Movies> call, @NonNull Throwable t) {
                 mView.showError();
             }
         });
     }
 
+    @SuppressLint("SimpleDateFormat")
     @VisibleForTesting
-    public String getReleaseDate() {
+    private String getReleaseDate() {
         Calendar cal = Calendar.getInstance();
-        @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-
-        return format1.format(cal.getTime());
-    }
-
-    @Override
-    public void finish() {
-
+        return new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
     }
 
 }

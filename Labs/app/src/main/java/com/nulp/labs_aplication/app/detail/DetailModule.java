@@ -10,17 +10,17 @@ import dagger.Provides;
  */
 
 @Module
-public class DetailModule {
-    private final DetailContract.View DetailView;
+class DetailModule {
+    private final DetailContract.View mDetailView;
 
     DetailModule(DetailContract.View DetailView) {
-        this.DetailView = DetailView;
+        this.mDetailView = DetailView;
     }
 
     @Provides
     @ActivityScope
     DetailContract.View provideDetailView() {
-        return DetailView;
+        return mDetailView;
     }
 
 }

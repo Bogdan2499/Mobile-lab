@@ -31,8 +31,6 @@ public interface MainContract {
 
         void onScrollToBottom();
 
-        void finish();
-
     }
 
 }

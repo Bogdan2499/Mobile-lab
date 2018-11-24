@@ -1,5 +1,7 @@
 package com.nulp.labs_aplication.app.detail;
 
+import android.support.annotation.NonNull;
+
 import com.nulp.labs_aplication.api.ApiService;
 import com.nulp.labs_aplication.api.model.Configuration;
 import com.nulp.labs_aplication.api.model.Images;
@@ -43,8 +45,9 @@ public class DetailPresenter implements DetailContract.Presenter {
         Call<Configuration> call = mApiService.getConfiguration();
         call.enqueue(new Callback<Configuration>() {
             @Override
-            public void onResponse(Call<Configuration> call, Response<Configuration> response) {
+            public void onResponse(@NonNull Call<Configuration> call, @NonNull Response<Configuration> response) {
                 if (response.isSuccessful()) {
+                    assert response.body() != null;
                     mImages = response.body().images;
                     mView.onConfigurationSet(mImages);
                     getMovie(movieId);
@@ -52,7 +55,7 @@ public class DetailPresenter implements DetailContract.Presenter {
             }
 
             @Override
-            public void onFailure(Call<Configuration> call, Throwable t) {
+            public void onFailure(@NonNull Call<Configuration> call, @NonNull Throwable t) {
             }
         });
     }
@@ -61,7 +64,7 @@ public class DetailPresenter implements DetailContract.Presenter {
         Call<Movie> call = mApiService.getMovie(movieId);
         call.enqueue(new Callback<Movie>() {
             @Override
-            public void onResponse(Call<Movie> call, Response<Movie> response) {
+            public void onResponse(@NonNull Call<Movie> call, @NonNull Response<Movie> response) {
                 if (response.isSuccessful()) {
                     mView.showContent(response.body());
                 } else {
@@ -70,15 +73,10 @@ public class DetailPresenter implements DetailContract.Presenter {
             }
 
             @Override
-            public void onFailure(Call<Movie> call, Throwable t) {
+            public void onFailure(@NonNull Call<Movie> call, @NonNull Throwable t) {
                 mView.showError();
             }
         });
-    }
-
-    @Override
-    public void finish() {
-
     }
 
 }

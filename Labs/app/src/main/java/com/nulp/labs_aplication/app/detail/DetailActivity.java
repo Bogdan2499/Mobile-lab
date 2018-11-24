@@ -1,5 +1,6 @@
 package com.nulp.labs_aplication.app.detail;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -153,27 +154,27 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
     }
 
     private String getGenres(Movie movie) {
-        String genres = "";
+        StringBuilder genres = new StringBuilder();
         for (int i = 0; i < movie.genres.size(); i++) {
             Genre genre = movie.genres.get(i);
-            genres += genre.name + ", ";
+            genres.append(genre.name).append(", ");
         }
 
-        genres = removeTrailingComma(genres);
+        genres = new StringBuilder(removeTrailingComma(genres.toString()));
 
-        return genres.isEmpty() ? "-" : genres;
+        return (genres.length() == 0) ? "-" : genres.toString();
     }
 
     private String getLanguages(Movie movie) {
-        String languages = "";
+        StringBuilder languages = new StringBuilder();
         for (int i = 0; i < movie.spokenLanguages.size(); i++) {
             SpokenLanguage language = movie.spokenLanguages.get(i);
-            languages += language.name + ", ";
+            languages.append(language.name).append(", ");
         }
 
-        languages = removeTrailingComma(languages);
+        languages = new StringBuilder(removeTrailingComma(languages.toString()));
 
-        return languages.isEmpty() ? "-" : languages;
+        return (languages.length() == 0) ? "-" : languages.toString();
     }
 
     @NonNull
@@ -220,6 +221,12 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
             i.setData(Uri.parse(url));
             startActivity(i);
         }
+    }
+    public static Intent onItemClick(Context context, int movieId, String movieTitle) {
+        Intent i = new Intent(context, DetailActivity.class);
+        i.putExtra(MOVIE_ID, movieId);
+        i.putExtra(MOVIE_TITLE, movieTitle);
+        return i;
     }
 
 }

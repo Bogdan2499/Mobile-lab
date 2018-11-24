@@ -25,8 +25,6 @@ public interface DetailContract {
 
         void start(int movieId);
 
-        void finish();
-
     }
 
 }
