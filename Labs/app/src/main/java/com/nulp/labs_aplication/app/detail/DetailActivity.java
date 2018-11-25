@@ -37,28 +37,28 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
     public static final String MOVIE_TITLE = "movie_title";
 
     @Inject
-    DetailPresenter detailPresenter;
+    DetailPresenter mDetailPresenter;
 
     @BindView(R.id.container)
-    View contentView;
+    View mContentView;
     @BindView(R.id.imageView)
-    ImageView imageView;
+    ImageView mImageView;
     @BindView(R.id.overviewHeader)
-    View overviewHeader;
+    View mOverviewHeader;
     @BindView(R.id.overviewTextView)
-    TextView overviewTextView;
+    TextView mOverviewTextView;
     @BindView(R.id.genresTextView)
-    TextView genresTextView;
+    TextView mGenresTextView;
     @BindView(R.id.durationTextView)
-    TextView durationTextView;
+    TextView mDurationTextView;
     @BindView(R.id.languageTextView)
-    TextView languageTextView;
+    TextView mLanguageTextView;
     @BindView(R.id.bookButton)
-    Button bookButton;
+    Button mBookButton;
     @BindView(R.id.textView)
-    View errorView;
+    View mErrorView;
     @BindView(R.id.progressBar)
-    View loadingView;
+    View mLoadingView;
 
     private int mMovieId = -1;
     private Images mImages;
@@ -87,14 +87,14 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
     @Override
     protected void onResume() {
         super.onResume();
-        detailPresenter.start(mMovieId);
+        mDetailPresenter.start(mMovieId);
     }
 
     @Override
     public void showLoading() {
-        loadingView.setVisibility(View.VISIBLE);
+        mLoadingView.setVisibility(View.VISIBLE);
         showContent(false);
-        errorView.setVisibility(View.GONE);
+        mErrorView.setVisibility(View.GONE);
     }
 
     @Override
@@ -106,17 +106,17 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
                     .load(fullImageUrl)
                     .apply(RequestOptions.centerCropTransform())
                     .transition(withCrossFade())
-                    .into(imageView);
+                    .into(mImageView);
         }
 
-        overviewTextView.setText(getOverview(movie.overview));
-        genresTextView.setText(getGenres(movie));
-        durationTextView.setText(getDuration(movie));
-        languageTextView.setText(getLanguages(movie));
+        mOverviewTextView.setText(getOverview(movie.overview));
+        mGenresTextView.setText(getGenres(movie));
+        mDurationTextView.setText(getDuration(movie));
+        mLanguageTextView.setText(getLanguages(movie));
 
-        loadingView.setVisibility(View.GONE);
+        mLoadingView.setVisibility(View.GONE);
         showContent(true);
-        errorView.setVisibility(View.GONE);
+        mErrorView.setVisibility(View.GONE);
     }
 
     private String getDuration(Movie movie) {
@@ -188,9 +188,9 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
 
     @Override
     public void showError() {
-        loadingView.setVisibility(View.GONE);
+        mLoadingView.setVisibility(View.GONE);
         showContent(false);
-        errorView.setVisibility(View.VISIBLE);
+        mErrorView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -201,10 +201,10 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
     private void showContent(boolean show) {
         int visibility = show ? View.VISIBLE : View.INVISIBLE;
 
-        contentView.setVisibility(visibility);
-        overviewHeader.setVisibility(visibility);
-        overviewTextView.setVisibility(visibility);
-        bookButton.setVisibility(visibility);
+        mContentView.setVisibility(visibility);
+        mOverviewHeader.setVisibility(visibility);
+        mOverviewTextView.setVisibility(visibility);
+        mBookButton.setVisibility(visibility);
     }
 
     @OnClick(R.id.bookButton)

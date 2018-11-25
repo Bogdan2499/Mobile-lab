@@ -1,10 +1,9 @@
 package com.nulp.labs_aplication.app.main;
 
-import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -25,9 +24,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.nulp.labs_aplication.app.detail.DetailActivity.MOVIE_ID;
-import static com.nulp.labs_aplication.app.detail.DetailActivity.MOVIE_TITLE;
-
 public class MainActivity extends AppCompatActivity implements
         MainContract.View,
         SwipeRefreshLayout.OnRefreshListener,
@@ -35,16 +31,16 @@ public class MainActivity extends AppCompatActivity implements
         MoviesAdapter.ItemClickListener {
 
     @Inject
-    MainPresenter presenter;
+    MainPresenter mPresenter;
 
     @BindView(R.id.swipeRefreshLayout)
-    SwipeRefreshLayout swipeRefreshLayout;
+    SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.recyclerView)
-    RecyclerView contentView;
+    RecyclerView mContentView;
     @BindView(R.id.textView)
-    View errorView;
+    View mErrorView;
     @BindView(R.id.progressBar)
-    View loadingView;
+    View mLoadingView;
 
     private MoviesAdapter mMoviesAdapter;
     private EndlessScrollListener mEndlessScrollListener;
@@ -65,40 +61,40 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void setupContentView() {
-        swipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mEndlessScrollListener = new EndlessScrollListener(linearLayoutManager, this);
-        contentView.setLayoutManager(linearLayoutManager);
-        contentView.addOnScrollListener(mEndlessScrollListener);
+        mContentView.setLayoutManager(linearLayoutManager);
+        mContentView.addOnScrollListener(mEndlessScrollListener);
     }
 
     @Override
     public void onRefresh() {
         mEndlessScrollListener.onRefresh();
-        presenter.onPullToRefresh();
+        mPresenter.onPullToRefresh();
     }
 
     @Override
     public void onScrollToBottom() {
-        presenter.onScrollToBottom();
+        mPresenter.onScrollToBottom();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        presenter.start();
+        mPresenter.start();
     }
 
     @Override
     public void showLoading(boolean isRefresh) {
         if (isRefresh) {
-            if (!swipeRefreshLayout.isRefreshing()) {
-                swipeRefreshLayout.setRefreshing(true);
+            if (!mSwipeRefreshLayout.isRefreshing()) {
+                mSwipeRefreshLayout.setRefreshing(true);
             }
         } else {
-            loadingView.setVisibility(View.VISIBLE);
-            contentView.setVisibility(View.GONE);
-            errorView.setVisibility(View.GONE);
+            mLoadingView.setVisibility(View.VISIBLE);
+            mContentView.setVisibility(View.GONE);
+            mErrorView.setVisibility(View.GONE);
         }
     }
 
@@ -106,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements
     public void showContent(List<Movie> movies, boolean isRefresh) {
         if (mMoviesAdapter == null) {
             mMoviesAdapter = new MoviesAdapter(movies, this, mImages, this);
-            contentView.setAdapter(mMoviesAdapter);
+            mContentView.setAdapter(mMoviesAdapter);
         } else {
             if (isRefresh) {
                 mMoviesAdapter.clear();
@@ -120,21 +116,21 @@ public class MainActivity extends AppCompatActivity implements
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                swipeRefreshLayout.setRefreshing(false);
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         }, 1500);
 
-        loadingView.setVisibility(View.GONE);
-        contentView.setVisibility(View.VISIBLE);
-        errorView.setVisibility(View.GONE);
+        mLoadingView.setVisibility(View.GONE);
+        mContentView.setVisibility(View.VISIBLE);
+        mErrorView.setVisibility(View.GONE);
     }
 
     @Override
     public void showError() {
-        swipeRefreshLayout.setRefreshing(false);
-        loadingView.setVisibility(View.GONE);
-        contentView.setVisibility(View.GONE);
-        errorView.setVisibility(View.VISIBLE);
+        mSwipeRefreshLayout.setRefreshing(false);
+        mLoadingView.setVisibility(View.GONE);
+        mContentView.setVisibility(View.GONE);
+        mErrorView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -153,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @OnClick(R.id.textView)
     void onClickErrorView() {
-        presenter.start();
+        mPresenter.start();
     }
 
 }

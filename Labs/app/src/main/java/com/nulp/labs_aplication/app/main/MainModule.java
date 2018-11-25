@@ -11,16 +11,16 @@ import dagger.Provides;
 
 @Module
 class MainModule {
-    private final MainContract.View mainView;
+    private final MainContract.View mMainView;
 
     MainModule(MainContract.View mainView) {
-        this.mainView = mainView;
+        this.mMainView = mainView;
     }
 
     @Provides
     @ActivityScope
     MainContract.View provideMainView() {
-        return mainView;
+        return mMainView;
     }
 
 }

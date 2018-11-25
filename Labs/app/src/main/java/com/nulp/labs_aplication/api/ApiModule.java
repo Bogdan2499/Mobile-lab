@@ -26,12 +26,12 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 @Module
 public class ApiModule {
-    private final String baseUrl;
-    private final String apiKey;
+    private final String mBaseUrl;
+    private final String mApiKey;
 
     public ApiModule(String baseUrl, String apiKey) {
-        this.baseUrl = baseUrl;
-        this.apiKey = apiKey;
+        this.mBaseUrl = baseUrl;
+        this.mApiKey = apiKey;
     }
 
     @Provides
@@ -50,7 +50,7 @@ public class ApiModule {
                 HttpUrl originalHttpUrl = original.url();
 
                 HttpUrl url = originalHttpUrl.newBuilder()
-                        .addQueryParameter("api_key", apiKey)
+                        .addQueryParameter("api_key", mApiKey)
                         .build();
 
                 Request.Builder requestBuilder = original.newBuilder()
@@ -89,10 +89,10 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    public Retrofit provideRetrofit(JacksonConverterFactory jacksonConverterFactory,
-                                    OkHttpClient okHttpClient) {
+    Retrofit provideRetrofit(JacksonConverterFactory jacksonConverterFactory,
+                             OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(mBaseUrl)
                 .client(okHttpClient)
                 .addConverterFactory(jacksonConverterFactory)
                 .addConverterFactory(new EnumConverterFactory())
@@ -101,7 +101,7 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    public ApiService provideApiService(Retrofit retrofit) {
+    ApiService provideApiService(Retrofit retrofit) {
         return retrofit.create(ApiService.class);
     }
 
