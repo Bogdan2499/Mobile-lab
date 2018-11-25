@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onItemClick(int movieId, String movieTitle) {
-        startActivity(DetailActivity.onItemClick(this, movieId, movieTitle));
+        startActivity(DetailActivity.getStartIntent(this, movieId, movieTitle));
     }
 
     @OnClick(R.id.textView)

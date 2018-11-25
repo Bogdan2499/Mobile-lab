@@ -37,9 +37,7 @@ captures/
 
 # IntelliJ
 *.iml
-.idea/workspace.xml
-.idea/libraries
-
+.idea
 # vim swap files
 *.swp
 *.swo

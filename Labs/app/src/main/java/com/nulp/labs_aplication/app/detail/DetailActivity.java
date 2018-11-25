@@ -63,6 +63,12 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
     private int mMovieId = -1;
     private Images mImages;
 
+    public static Intent getStartIntent(Context context, int movieId, String movieTitle) {
+        Intent i = new Intent(context, DetailActivity.class);
+        i.putExtra(MOVIE_ID, movieId);
+        i.putExtra(MOVIE_TITLE, movieTitle);
+        return i;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -221,12 +227,6 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
             i.setData(Uri.parse(url));
             startActivity(i);
         }
-    }
-    public static Intent onItemClick(Context context, int movieId, String movieTitle) {
-        Intent i = new Intent(context, DetailActivity.class);
-        i.putExtra(MOVIE_ID, movieId);
-        i.putExtra(MOVIE_TITLE, movieTitle);
-        return i;
     }
 
 }
