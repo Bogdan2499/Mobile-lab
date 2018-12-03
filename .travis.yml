@@ -1,26 +1,17 @@
 language: android
 jdk: oraclejdk8
+sudo: false
+
 android:
-  licenses:
-    - 'android-sdk-preview-license-.+'
-    - 'android-sdk-license-.+'
-    - 'google-gdk-license-.+'
   components:
-    - tools
     - platform-tools
-    - build-tools-27.0.2
-    - android-27
-    # Additional components
-    - extra-google-google_play_services
-    - extra-google-m2repository
-    - extra-android-support
+    - tools
+    - build-tools-24.0.2
+    - android-22
+    - android-24
+    - sys-img-armeabi-v7a-android-22
     - extra-android-m2repository
-    - addon-google_apis-google-27
-script:
- - cd Labs
- - chmod +x gradlew
- - if [[ $LINT == 'true' ]]; then ./gradlew lint ; fi
- - ./gradlew clean assembleDebug test lint
+    
 deploy:
   provider: releases
   api_key:
@@ -30,3 +21,13 @@ deploy:
   on:
     tags: false
     all_branches: true
+
+before_script:
+  - echo yes | sdkmanager "build-tools;27.0.3"
+  - cd Labs
+  - chmod +x gradlew
+    
+script:
+ - ./gradlew connectedAndroidTest
+ - ./gradlew clean assembleDebug test lint
+
