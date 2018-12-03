@@ -37,6 +37,6 @@ deploy:
   file: "app/build/outputs/apk/debug/app-debug.apk"
   skip_cleanup: true
   on:
-    branch: master
+    branch: lab-9
     repo: Vova0199/Mobile-lab
 
