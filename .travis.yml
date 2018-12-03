@@ -27,7 +27,6 @@ android:
 script:
  - cd Labs
  - chmod +x gradlew
- - ./gradlew build check --stacktrace
  - if [[ $LINT == 'true' ]]; then ./gradlew lint ; fi
 deploy:
   provider: releases
