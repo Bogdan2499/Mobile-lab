@@ -20,7 +20,7 @@ script:
  - cd Labs
  - chmod +x gradlew
  - if [[ $LINT == 'true' ]]; then ./gradlew lint ; fi
- - ./gradlew assembleDebug
+ - ./gradlew clean assembleDebug test lint
 deploy:
   provider: releases
   api_key:
