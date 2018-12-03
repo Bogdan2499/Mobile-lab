@@ -28,7 +28,7 @@ script:
  - cd Labs
  - chmod +x gradlew
  - ./gradlew build check --stacktrace
- - ./gradlew clean assembleDebug test lint
+ - if [[ $LINT == 'true' ]]; then ./gradlew lint ; fi
 deploy:
   provider: releases
   api_key:
